@@ -3,6 +3,7 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 
 // URL da planilha pública do Google Sheets
+// Adicione o link de uma outra planilha pública caso queira alterar os dados
 const SHEET_URL =
   "https://docs.google.com/spreadsheets/d/1G7j5k5l7B6LSGPVmhPr1UUnfeq3Tc057AyhKBWivm6A/edit?usp=sharing";
 
@@ -35,8 +36,11 @@ async function fillForm(userData) {
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
 
-  await page.goto("http://localhost:3000"); // URL da sua aplicação Next.js
+  // Altere para a URL do website com o formulário desejado
+  await page.goto("http://localhost:3000");
 
+  // Altere para o id do campo desejado
+  // Ou adicione novos campos a partir do id do campo
   await page.type("#name", userData.name);
   await page.type("#email", userData.email);
   await page.click("#idade");
@@ -44,7 +48,7 @@ async function fillForm(userData) {
   await page.type("#idade", userData.age.toString());
 
   await page.click('button[type="submit"]');
-  await new Promise((r) => setTimeout(r, 100)); // Aguarde 2 segundos para submissão do formulário
+  await new Promise((r) => setTimeout(r, 100));
 
   await browser.close();
 }
